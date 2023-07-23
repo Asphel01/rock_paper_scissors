@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getComputerChoice() {
+            let rand = Math.floor(Math.random() * 10);
+            if(rand <= 3) {
+                return "rock";
+            }else if(rand <= 6) {
+                return "paper";
+            }else {
+                return "scissors";
+            }
+        }
+    
+        function playRound(playerSelection, computerSelection) {
+            playerSelection.toLowerCase();
+            if(playerSelection === "rock" && computerSelection === "paper") {
+                return "You lose";
+            }else if(playerSelection === "rock" && computerSelection === "scissors") {
+                return "You win";
+            }else if(playerSelection === "paper" && computerSelection === "rock") {
+                return "You win";
+            }else if(playerSelection === "paper" && computerSelection === "scissors") {
+                return "You lose";
+            }else if(playerSelection === "scissors" && computerSelection === "rock") {
+                return "You lose";
+            }else if(playerSelection === "scissors" && computerSelection === "paper") {
+                return "You win";
+            }else {
+                return "Tie"
+            }
+        }
+    
+        function game() {
+            for(let i = 1; i <= 5; i++) {
+                const playerChoice = prompt("Enter your choice:");
+                const computerChoice = getComputerChoice();
+                console.log("Round", i);
+                console.log("Player choice: " + playerChoice);
+                console.log("Computer choice: " + computerChoice);
+                console.log(playRound(playerChoice, computerChoice));
+            }
+        }
+
+        game();
+    </script>
+</body>
+</html>
