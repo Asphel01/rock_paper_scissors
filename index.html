@@ -1,51 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Rock Paper Scissors</title>
 </head>
+
 <body>
+    <div class="round">Round: 0</div>
+    <div class="status">
+        <div class="playerChoice">Player Choice:</div>
+        <div class="computerChoice">Computer Choice:</div>
+    </div>
+    <div class="buttons">
+        <button class="rock">rock</button>
+        <button class="paper">paper</button>
+        <button class="scissors">scissors</button>
+    </div>
+    <div class="results"></div>
+    <div class="scoreBoard">
+        <div class="pScore">Player Score: 0</div>
+        <div class="cScore">Computer Score: 0</div>
+    </div>
+    
     <script>
         function getComputerChoice() {
-            let rand = Math.floor(Math.random() * 10);
-            if(rand <= 3) {
+            const rand = Math.floor(Math.random() * 3);
+            if (rand === 0) {
                 return "rock";
-            }else if(rand <= 6) {
+            } else if (rand === 1) {
                 return "paper";
-            }else {
+            } else {
                 return "scissors";
             }
         }
-    
+
         function playRound(playerSelection, computerSelection) {
-            playerSelection.toLowerCase();
-            if(playerSelection === "rock" && computerSelection === "paper") {
+            if (playerSelection === "rock" && computerSelection === "paper") {
                 return "You lose";
-            }else if(playerSelection === "rock" && computerSelection === "scissors") {
+            } else if (playerSelection === "rock" && computerSelection === "scissors") {
                 return "You win";
-            }else if(playerSelection === "paper" && computerSelection === "rock") {
+            } else if (playerSelection === "paper" && computerSelection === "rock") {
                 return "You win";
-            }else if(playerSelection === "paper" && computerSelection === "scissors") {
+            } else if (playerSelection === "paper" && computerSelection === "scissors") {
                 return "You lose";
-            }else if(playerSelection === "scissors" && computerSelection === "rock") {
+            } else if (playerSelection === "scissors" && computerSelection === "rock") {
                 return "You lose";
-            }else if(playerSelection === "scissors" && computerSelection === "paper") {
+            } else if (playerSelection === "scissors" && computerSelection === "paper") {
                 return "You win";
-            }else {
+            } else {
                 return "Tie"
             }
         }
-    
+
         function game() {
-            for(let i = 1; i <= 5; i++) {
-                const playerChoice = prompt("Enter your choice:");
-                const computerChoice = getComputerChoice();
-                console.log("Round", i);
-                console.log("Player choice: " + playerChoice);
-                console.log("Computer choice: " + computerChoice);
-                console.log(playRound(playerChoice, computerChoice));
-            }
+            let pScore = 0;
+            let cScore = 0;
+            let round = 0;
+
+            const choices = document.querySelectorAll('button');
+            choices.forEach(choice => {
+                choice.addEventListener('click', e => {
+                    const computerChoice = getComputerChoice();
+                    document.querySelector('.computerChoice').textContent = `Computer Choice: ${computerChoice}`;
+                    document.querySelector('.playerChoice').textContent = `Player Choice: ${choice.className}`;
+
+                    const result = playRound(choice.className, computerChoice);
+                    document.querySelector('.results').textContent = result;
+
+                    if(result === "You win") {
+                        pScore++;
+                        document.querySelector('.pScore').textContent = `Player Score: ${pScore}`;
+                    }
+                    if(result === "You lose") {
+                        cScore++;
+                        document.querySelector('.cScore').textContent = `Computer Score: ${cScore}`;
+                    }
+                    
+                    round++;
+                    document.querySelector('.round').textContent = `Round: ${round}`;
+
+                    if(pScore === 5){
+                        alert("The player is the final winner!");
+                    }
+
+                    if(cScore === 5){
+                        alert("The computer is the final winner!");
+                    }
+                });
+            }); 
         }
 
         game();
